@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css/' %}" />
+</head>
+<body>
+
+<style>
+    .mb-3 {
+        max-block-size: none;
+        background-image: radial-gradient( circle 900px at 10.3% 17%,  rgba(3,39,93,1) 0%, rgba(37,28,28,1) 90% );
+    }
+
+    .card-title {
+        background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .card-text {
+        background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    body {
+        background-color: #00DBDE;
+        background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+<!--        background-image: url(/media/6b1c78922d462df19249a019c5c94183_xK9q4wt.jpg);-->
+    }
+
+    .button__container {
+        max-width: 100px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        background-image: #0d6efd;
+    }
+
+    .btn-book {
+        min-width: 200px;
+        background-color: #0d6efd;
+    }
+
+    .txt {
+        max-width: 540px;
+        margin-top: 350px;
+    }
+
+    .rait {
+        max-width: 500px;
+    }
+
+    .comment {
+        max-width: 500px;
+        background-color: #00DBDE;
+        background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+    }
+</style>
+
+<div class="card mb-3">
+    <div>
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ book.image.url }}" class="img-fluid rounded-start" alt="/media/1234567109.jpg">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ book.title }}</h5>
+              <p class="card-text">{{ book.description }}</p>
+              <a href="/book/" class="btn btn-book">Books</a>
+              <button type="button" class="btn btn-primary"><a href="/book/{{ book.id }}/raiting/"><p class="card-text">Raiting</p></a></button>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="card mb-3">
+            <ul>
+                {% for e in book.book_selection.all %}
+                    <h2 class="card-title">Expert name: {{e.expert_selection.surname}} {{e.expert_selection.name}}</h2>
+                    <p class="card-text">Hobby: {{ e.expert_selection.hobby }}</p>
+                    <p class="card-text">Information about {{ e.expert_selection.name }}:
+                        {{ e.expert_selection.info }}
+                    </p><br>
+                    <p class="card-text">Recomedation text: {{ e.text}}</p>
+                {% endfor %}
+            </ul>
+        </div>
+</div>
+<div class="card mb-3 comment">
+    <h2>Comments: </h2>
+    <ul>
+        {% for i in book.book_comment.all %}
+        <li>
+            <p>{{ i.name }}</p>
+            <p>{{i.text_comment}}</p>
+            <p>- {{i.date_now}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="card mb-3 comment">
+    <div class="card-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="form-control" type="submit" value="Add a comment">
+        </form>
+    </div>
+</div>
+<div class="card mb-3 rait">
+    <div class="card-body">
+        <h4 class="card-title">Рейтинги людей:</h4>
+        <div class="card-text">
+            {% for i in book.raiting_book.all %}
+            <p>Имя: {{ i.name }}</p>
+            <p>Рейтинг: {{ i.raiting }}/5</p>
+            <p>_____________________________</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div>
+    <button type="button" class="btn btn-primary"><a href="/book/{{ book.id }}/update/"><p class="card-text">Change</p></a></button>
+    <button type="button" class="btn btn-primary"><a href="/book/{{ book.id }}/delete/"><p class="card-text">Delete</p></a></button>
+</div>
+<div class="text txt">
+    <p style="color: white;">в "book_detail.html" вы можете вырубить комментарий цвета заднего фона или оставить этот фон</p>
+</div>
+</body>
+</html>
