@@ -1,7 +1,3 @@
-from os import name
-from re import template
-from statistics import mode
-from webbrowser import get
 from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect

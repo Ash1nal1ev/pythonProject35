@@ -1,7 +1,3 @@
-from os import name
-from pyexpat import model
-from statistics import mode
-from turtle import title
 from django.db import models
 
 class Book(models.Model):
@@ -21,12 +17,12 @@ class Raiting(models.Model):
         (5, 'Amaizing'),
     )
 
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='raiting_book')
+    rait = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='raiting_book')
     name = models.CharField(max_length=100)
     raiting = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
 
     def __str__(self):
-        return self.book.title
+        return self.rait.title
 
 class BookComment(models.Model):
     name = models.CharField(max_length=100)
